@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пользователи</title>
+</head>
+<body>
+    <h1>Список пользователей</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody id="userTable">
+        </tbody>
+    </table>
+
+    <script>
+        // Выполнение GET-запроса к API
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.json()) // Получение JSON-ответа
+            .then(data => {
+                console.log(data); // Вывод данных в консоль
+                
+                const userTable = document.getElementById('userTable');
+
+                // Проход по каждому пользователю и добавление его в таблицу
+                data.forEach(user => {
+                    const row = document.createElement('tr');
+                    const nameCell = document.createElement('td');
+                    const emailCell = document.createElement('td');
+                    
+                    nameCell.textContent = user.name;
+                    emailCell.textContent = user.email;
+                    
+                    row.appendChild(nameCell);
+                    row.appendChild(emailCell);
+                    userTable.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Ошибка:', error));
+    </script>
+</body>
+</html>
